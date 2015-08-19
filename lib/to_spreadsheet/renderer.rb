@@ -45,6 +45,14 @@ module ToSpreadsheet
             xls_col = xls_row.add_cell cell_node.inner_text
             # Cell <-> th or td association
             context.assoc! xls_col, cell_node
+            # add emty cells if cell_node has colspan
+            if cell_node.attributes['colspan']
+              colspan = cell_node.attributes['colspan'].value.to_i
+              (colspan - 1).times do |_|
+                xls_row.add_cell ''
+                # context.assoc! additional_col, cell_node
+              end
+            end
           end
         end
       end
