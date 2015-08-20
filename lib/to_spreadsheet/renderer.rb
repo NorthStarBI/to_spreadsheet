@@ -42,7 +42,7 @@ module ToSpreadsheet
           # Row <-> %tr association
           context.assoc! xls_row, row_node
           row_node.css('th,td').each do |cell_node|
-            xls_col = xls_row.add_cell cell_node.inner_text
+            xls_col = xls_row.add_cell cell_node.inner_text.try(:strip).try(:squish)
             # Cell <-> th or td association
             context.assoc! xls_col, cell_node
             # add emty cells if cell_node has colspan
